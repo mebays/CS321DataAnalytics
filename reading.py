@@ -2,6 +2,7 @@
 
 import csv
 import json
+import datetime
 
 def createCSV():
     with open('C:/Users/Matthew/Documents/CS321/RC_2015-08.csv', mode='r') as infile:
@@ -12,7 +13,7 @@ def createCSV():
             writer = csv.writer(outfile, delimiter=' ', quotechar =',',quoting=csv.QUOTE_MINIMAL)
             count = 0
             for r in reader:
-                if count == 1000000:
+                if count == 100:
                     break
                 writer.writerows(r)
                 count +=1
@@ -22,17 +23,17 @@ def createCSV():
             
 
 def readjson():
-    with open('C:/users/matthew/documents/2015Fall/cs321/rc_2015-08.json', mode='r') as infile:
-        with open('C:/users/matthew/documents/2015Fall/cs321/new.csv', mode = 'w') as outfile:
+    with open('/home/mebays/Documents/cs321DataAna/RC_2015-08.json', mode='r') as infile:
+        with open('/home/mebays/Documents/cs321DataAna/newWithOutBody.csv', mode = 'w') as outfile:
             writer = csv.writer(outfile)
             writer.writerow(['body','gilded','subreddit_id', 'author_flair_css_class', 'edited','subreddit','author_flair_text','author', 'created_utc', 'distinguished','parent_id', 'score', 'retrieved_on','id','link_id','ups','controversiality'])
         
             for i in range(1000000):
                 jdata =json.loads(infile.readline())
-                try:
-                    body = jdata['body'].encode('ascii','ignore')
-                except:
-                    body = 'Error'
+                #try:
+                    #body = jdata['body'].encode('ascii','ignore')
+                #except:
+                    #body = 'Error'
                 try:
                     gilded = jdata['gilded']
                 except:
@@ -63,6 +64,7 @@ def readjson():
                     author = 'Error'
                 try:
                     created_utc = jdata['created_utc']
+                    #created_utc = datetime.datetime.fromtimestamp(int(jdata['created_utc'])).strftime('%Y-%m-%d')
                 except:
                     created_utc = 'Error'
                 try:
@@ -97,8 +99,7 @@ def readjson():
                     controversiality = jdata['controversiality'].encode('ascii','ignore')
                 except:
                     controversiality = 'Error'
-                writer.writerow([body,
-                                 gilded,
+                writer.writerow([gilded,
                                  subreddit_id,
                                  author_flair_css_class,
                                  edited,
